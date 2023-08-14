@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Custom Campervan Builder</title>
+	<style>
+		/* my phone width = 520 px when ratio = 0.75 */
+		/* background image */
+		html { 
+			background: url(Images/bg.png) no-repeat center fixed; 
+			background-size: cover;
+			font-family: sans-serif;
+			/* font-size: 1.2rem; */
+		}
+
+		/* getting rid of maragins */
+		body {
+			margin:0%;
+			padding:0%;
+		}
+		
+		/* 
+		 * contains all visible elements 
+		 * used to put categories in center
+		 */
+		.scrollframe {
+			display:flex;
+			justify-content: center;
+		}
+
+		.sheet {
+			/* margin & padding */
+			margin: 64px;
+			min-width: 55%;
+			/* max-width: 100%; */
+			padding: 32px;
+
+			/* alignment */
+			display:flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			align-items: stretch;
+
+			/* aesthetics */
+			background-color: #FAF9F6; /* offwhite */
+			/* background-color: #deddda; */
+			box-shadow: 0px 0px 15px 3px black;
+			border-radius: 50px;
+			border-bottom: 50px solid #242B44;
+		}
+
+		@media screen and (max-width: 480px) {
+			.sheet {
+				/* margin & padding */
+				margin: 7.5%;
+				/* width: 10%; */
+				/* max-width: 100%; */
+				/* padding: 32px; */
+
+				/* alignment */
+				/* display:flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				align-items: stretch; */
+
+				/* aesthetics */
+				/* background-color: aquamarine; offwhite */
+				/* background-color: #deddda; */
+				/* box-shadow: 0px 0px 15px 3px black;
+				border-radius: 3px;
+				border-bottom: 3px solid #242B44; */
+			}
+		}
+
+		.header {
+			/* alignment */
+			display: flex;
+			justify-content: left;
+			align-items: center;
+
+			/* sizing, margin, padding */
+			/* height: 160px; */
+			height: 160px;
+			margin: -32px -32px 0px -32px;
+			/* padding-left: 16px; */
+			/* padding-top: 32px; */
+			padding: 32px;
+
+			/* aesthetics */
+			border-radius: 50px 50px 0px 0px;
+			background-color: #FAF9F6;
+			color: black;
+			/* border: 2px solid yellow; */
+		}
+
+		@media screen and (max-width: 525px) { /* 525 smooth on my laptop */
+			.header {
+			/* alignment */
+			/* display: flex; */
+			justify-content: center;
+			/* align-items: center; */
+
+			/* sizing, margin, padding */
+			/* height: 160px; */
+			/* margin: -32px -32px 0px -32px; */
+			/* padding-left: 16px; */
+			/* padding-top: 32px; */
+			/* padding: 32px; */
+
+			/* aesthetics */
+			/* border-radius: 3px 3px 0px 0px; */
+			/* background-color: yellow; */
+			/* color: black; */
+			/* border: 2px solid yellow; */
+			}
+		}
+
+		.center-header {
+			display: flex;
+			/* border: 1px solid black; */
+		}
+		
+		/* .header-box {
+			display:flex;
+			max-width: 50%;
+			border: 2px solid lime;
+		} */
+
+		.header-image {
+			object-fit: contain;
+			/* max-width: 33%; */
+			/* max-height: 160px; */
+			height: 128px;
+			margin-right: 13px;
+			/* border: 2px dashed purple; */
+		}
+
+		.header-title {
+			/* max-width: calc(50% - 21px);	* 13px w/out borders */
+			/* border: 2px dashed red; */
+			font-size: 26px;
+			/* line-height: noraml; */
+		}
+
+		.category-title {
+			display: flex;
+			justify-content: center;
+			text-align: center;
+			margin-bottom: 32px;
+			/* font-family: blippo; */
+			/* border: 1px solid red; */
+		}
+
+		.category-title p {
+			font-size: 14px;
+			color: #38383b;
+		}
+
+		.category-notes {
+			margin-bottom: -26px;
+		}
+
+		.box {
+			height: 160px;
+			width: 160px;
+			background-color: #242B44;
+		}
+
+		.category {
+			display: flex;
+			flex:1;
+			flex-wrap: wrap-reverse;
+			margin-bottom: 32px;
+			/* align-items: center; */ /* TD: yay or nay? */
+			/* border: 1px solid green; */
+			justify-content: center;	/* might not need after finished with center on wrap */
+			/* align-content: center; */
+		}
+
+		@media screen and (max-width: 850px) {	/* half my laptop is 851 */
+			.category {
+				/* background-color: lightslategray; */
+				flex-direction: column-reverse;
+				align-items: center;
+				align-content: center;
+			}
+
+			.sheet {
+				width: 100%;
+			}
+		}
+
+		.category-image {
+			flex:1;
+			object-fit: contain;
+			/* border: 1px solid blue; */
+		}
+
+		.no-image {
+			display: flex;
+			flex:2;
+			/*border: 1px dotted black;
+			justify-content: center;*/
+		}
+
+		
+		.center-on-wrap{
+			width:fit-content;
+			/* border: 1px dashed pink; */
+		}
+
+		@media screen and (max-width: 850px) {
+			.center-on-wrap {
+				/* margin-left: 24px; */
+			}
+		}
+
+		/* 
+		 * The collapsible functionality was lifted from W3 schools
+		 * url: https://www.w3schools.com/howto/howto_js_collapsible.asp
+		 * and integrated from here vvv
+		 */
+		.collapsible {
+			background-color: #FAF9F6;
+			color: black;
+			border: none;
+			outline: none;
+			font-size: 20px;
+		}
+
+		.content {
+			/* border: 1px solid red; */
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height 0.2s ease-out;
+			padding-left: 20px;
+		}
+
+		.content legend {
+			display: none;
+		}
+
+		.collapsible:after {
+			content: '\02795';
+			font-size: 10px;
+			float: left;
+			margin-right: 5px;
+		}
+
+		.active:after {
+			content: "\2796";
+		}
+		/* 
+		 * to here ^^^
+		 */
+
+		.dropdown {
+			/*max-width: 50%;*/
+			width: fit-content;
+			margin: 8px;
+			/* border: 1px solid orange; */
+		}
+
+		fieldset {
+			border:0;
+			padding:0px;
+		}
+
+		.foot-top {
+			height: 50px;
+			background-color: #242B44;
+			margin: 0px -32px;
+		}
+
+		.footer {
+			/* alignment */
+			display: flex;
+			justify-content: center;
+			/* text-align: center; */
+			align-items: center;
+
+			/* sticky display */
+			position:sticky;
+			bottom:0;
+			margin: 0px -32px -33px -32px;
+
+			/* aesthetics */
+			/* background-color: #38383b; */
+			background-color: #242b44;
+			/* background-color: #a8a5a0; */
+			color: #FAF9F6;
+			/* color: #38383b; */
+			/* color: black; */
+			height: 48px;
+			/* border: 2px dashed lime; */
+		}
+
+		.price-text-num {
+			/* alignment */
+			display: flex;
+			justify-content: center;
+			text-align: center;
+			size: fit-content;
+			/* padding:0px; */
+
+			/* border: 2px solid red; */
+		}
+
+		.price-text-num h2 {
+			margin: 0px;
+		}
+
+		#price-num {
+			margin-left: 8px;
+		}
+
+	</style>
+</head>
+<body>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+	<!-- WHOLE SCREEN -->
+	<div class="scrollframe">
+
+		<!-- "SHEET": HEADER + CATEGORIES + FOOTER -->
+		<div class="sheet">
+
+			<!-- HEADER-->
+			<div class="header">
+				<div class="center-header">
+					<img class="header-image" src="Images/VVLogoTrans.png">
+					<h1 class="header-title">Custom<br>Campervan<br>Builder</h1>
+				</div>
+			</div>
+
+			<div class="category-title">
+				<h2>Vehicle</h2>
+			</div>
+			<!-- CATEGORY: VEHICLE -->
+			<div class="category">
+				<div class="no-image">
+					<div class="center-on-wrap" id="check-wrap">
+
+						<!-- SUB-CATEGORY: BASE MODEL -->
+						<div class="dropdown">
+							<button type="button" class="collapsible">Base Model:</button>
+							<div class="content">
+									<fieldset>
+										<legend>Base Model</legend>      
+										<input type="radio" id="cargo-reg" name="base-model" value="cargo-reg" data-price="10000">Cargo Regular Body ($10,000)<br>
+										<input type="radio" id="cargo-extend" name="base-model" value="cargo-extend" data-price="11000" checked>Cargo Extended Body ($11,000)<br>
+										<input type="radio" id="pass-reg" name="base-model" value="pass-reg" data-price="8000">Passenger Regular Body ($8,000)<br>
+										<input type="radio" id="pass-extend" name="base-model" value="pass-extend" data-price="9000">Passenger Extended Body ($9,000)<br>
+									</fieldset>
+							</div>
+						</div>
+
+							<!-- SUB-CATEGORY: ROOF TYPE -->
+							<div class="dropdown">
+								<button type="button" class="collapsible">Roof Type:</button>
+								<div class="content">
+									<fieldset>
+										<legend>Roof Type</legend>      
+										<input type="radio" id="low-roof" name="roof" value="low-roof" data-price="0">Low Roof ($0)<br>
+										<input type="radio" id="high-roof" name="roof" value="high-roof" data-price="9000">High Roof ($9,000)<br>
+										<input type="radio" id="pop-top" name="roof" value="pop-top" data-price="10000" checked>Pop-Top ($10,000)<br>
+									</fieldset>
+								</div>
+							</div>
+
+					</div>
+				</div>
+
+				<img class="category-image" src="Images/phtrans.png" alt="Default Van Image">
+
+			</div>
+
+			<div class="category-title category-notes">
+				<h2>General</h2>
+			</div>
+			<div class="category-title">
+				<p>*includes insulation and subfloor</p>
+			</div>
+			<!-- CATEGORY: GENERAL -->
+			<div class="category">
+				<div class="no-image">
+					<div class="center-on-wrap">
+
+						<!-- SUB-CATEGORY: WALLS & CEILING -->
+						<div class="dropdown">
+							<button type="button" class="collapsible">Walls & Ceiling:</button>
+							<div class="content">
+								<fieldset>
+									<legend>Walls & Ceiling</legend>      
+									<input type="radio" id="basic-sheet" name="wallCeil" value="basic-sheet" data-price="1150" checked>1/4" Basic Sheeting ($1,150)<br>
+									<input type="radio" id="option1" name="wallCeil" value="option1" data-price="2">TD: Another Option ($TD)<br>
+								</fieldset>
+							</div>
+						</div>
+
+						<!-- SUB-CATEGORY: FLOORING -->
+						<div class="dropdown">
+							<button type="button" class="collapsible">Flooring:</button>
+							<div class="content">
+								<fieldset>
+									<legend>Flooring</legend>      
+									<input type="radio" id="vinyl-floor" name="flooring" value="vinyl-floor" data-price="330" checked>Vinyl Flooring ($330)<br>
+									<input type="radio" id="coin-dot" name="flooring" value="coin-dot" data-price="150">Coin Dot ($150)<br>
+									<input type="radio" id="comboF" name="flooring" value="comboF" data-price="3">Combo Vinyl / Coin Dot ($TD)<br>
+								</fieldset>
+							</div>
+						</div>
+
+						<!-- SUB-CATEGORY: WINDOWS -->
+						<div class="dropdown">
+							<button type="button" class="collapsible">Windows:</button>
+							<div class="content">
+								<fieldset>      
+									<legend>Windows</legend>      
+									<input type="checkbox" id="driver-middle-bunk" value="driver-middle-bunk" data-price="1">Driver Side Middle - Bunk Window ($TD)<br>
+									<input type="checkbox" id="rear-barn" value="rear-barn" data-price="2">Rear Barn Doors ($TD)<br>
+									<input type="checkbox" id="side-barn" value="side-barn" data-price="3">Side Barn Doors ($TD)<br>
+									<input type="checkbox" id="pass-rear-quarter" value="pass-rear-quarter" data-price="4">Passenger Side Rear Quarter ($TD)<br>
+								</fieldset>
+							</div>
+						</div>
+
+						<!-- SUB-CATEGORY: ACCESSORIES -->
+						<div class="dropdown">
+							<button type="button" class="collapsible">Accessories:</button>
+							<div class="content">
+								<fieldset>
+									<legend>Accessories</legend>
+									<input type="checkbox" id="maxx-air-fan" value="maxx-air-fan" data-price="1">Maxx Air Fan ($TD)<br>
+									<input type="checkbox" id="ac-unit" value="ac-unit" data-price="2">A/C Unit ($TD)<br>
+									<input type="checkbox" id="pass-swivel" value="pass-swivel" data-price="3">Passenger Swivel Seat ($TD)<br>
+									<input type="checkbox" id="table" value="table" data-price="4">Table ($TD)<br>
+								</fieldset>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<img class="category-image" src="Images/phtrans.png" alt="Default Van Image">
+
+			</div>
+
+			<div class="category-title">
+				<h2>Cabinets</h2>
+			</div>
+			<!-- CATEGORY: CABINETS -->
+			<div class="category">
+				<div class="no-image">
+					<div class="center-on-wrap">
+
+						<!-- SUB-CATEGORY: CABINETS -->
+						<div class="dropdown">
+							<button type="button" class="collapsible">Cabinets:</button>
+							<div class="content">
+								<fieldset>      
+									<legend>Cabinets</legend>      
+									<input type="radio" id="cab-kitch" name="cabinets" value="cab-kitch" data-price="1420">Kitchen Cabinetry ($1,420)<br>
+									<input type="radio" id="cab-back" name="cabinets" value="cab-back" data-price="1100">Back Storage Cabinetry ($1,100)<br>
+									<input type="radio" id="cab-both" name="cabinets" value="cab-both" data-price="2520" checked>Kitchen & Back Storage Cabinetry ($2,520)<br>
+									<!-- TD: remove combo and make min=1 max=2. No combo discount? If yes, don't remove combo. -->
+									<!-- TD: Notes -->
+								</fieldset>
+							</div>
+						</div>
+
+						<!-- SUB-CATEGORY: FINISH -->
+						<div class="dropdown">
+							<button type="button" class="collapsible">Finish:</button>
+							<div class="content">
+								<fieldset>
+									<legend>Finish</legend>
+									<input type="radio" id="finish-raw" name="finish" value="finish-raw" data-price="0">Raw Aluminum ($0)<br>
+									<input type="radio" id="finish-powder" name="finish" value="finish-powder" data-price="1800">Powdercoated Aluminum ($1,800)<br>
+								</fieldset>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<img class="category-image" src="Images/phtrans.png" alt="Default Van Image">
+
+			</div>
+
+			<div class="category-title category-notes">
+				<h2>Bed</h2>
+			</div>
+			<div class="category-title category-notes">
+				<p>*loft bed requires High Roof or Pop-Top</p>
+			</div>
+			<div class="category-title">
+				<p>*all options available in many colors</p>
+			</div>
+			<!-- CATEGORY: BED -->
+			<div class="category">
+				<div class="no-image">
+					<div class="center-on-wrap">
+
+						<!-- SUB-CATEGORY: BENCH BED -->
+						<div class="dropdown">
+							<button type="button" class="collapsible">Bench Bed:</button>
+							<div class="content">
+								<fieldset>      
+									<legend>Bench Bed</legend>      
+									<input type="radio" id="bench-vinyl" name="bench" value="bench-vinyl" data-price="1">Vinyl Upholstery ($TD)<br>
+									<input type="radio" id="bench-fabric" name="bench" value="bench-fabric" data-price="2">Fabric Upholstery ($TD)<br>
+								</fieldset>
+							</div>
+						</div>
+
+						<!-- SUB-CATEGORY: LOFT BED -->
+						<div class="dropdown">
+							<button type="button" class="collapsible">Loft Bed:</button>
+							<div class="content">
+								<fieldset>
+									<legend>Loft Bed</legend>
+									<input type="radio" id="loft-vinyl" name="loft" value="loft-vinyl" data-price="1" data-ticked="0">Vinyl Upholstery ($TD)<br>
+									<input type="radio" id="loft-fabric" name="loft" value="loft-fabric" data-price="2" data-ticked="0">Fabric Upholstery ($TD)<br>
+								</fieldset>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<img class="category-image" src="Images/phtrans.png" alt="Default Van Image">
+
+			</div>
+
+			<div class="category-title category-notes">
+				<h2>Electrical & Plumbing</h2>
+			</div>
+			<div class="category-title category-notes">
+				<p>*all electrical systems include battery/power<br>system and basic lighting package</p>
+			</div>
+			<div class="category-title">
+				<p>*all plumbing systems include a sink</p>
+			</div>
+			<!-- CATEGORY: ELECTRICAL & PLUMBING -->
+			<div class="category">
+				<div class="no-image">
+					<div class="center-on-wrap">
+
+						<!-- SUB-CATEGORY: ELECTRICAL SYSTEM -->
+						<div class="dropdown">
+							<button type="button" class="collapsible">Electrical System:</button>
+							<div class="content">
+								<fieldset>
+									<legend>Electrical System</legend>      
+									<input type="radio" id="elec-2KW" name="elec" value="elec-2KW" data-price="1">EcoFlow 2KW Power Kit ($TD)<br>
+									<input type="radio" id="elec-5KW" name="elec" value="elec-5KW" data-price="2">EcoFlow 5KW Power Kit ($TD)<br>
+								</fieldset>
+							</div>
+						</div>
+
+						<!-- SUB-CATEGORY: PLUMBING SYSTEM -->
+						<div class="dropdown">
+							<button type="button" class="collapsible">Plumbing System:</button>
+							<div class="content">
+								<fieldset>
+									<legend>Plumbing System</legend>      
+									<input type="radio" id="plumb-simple" name="plumbing" value="plumb-simple" data-price="1">Simple: 2.5gal fresh & gray ($TD)<br>
+									<input type="radio" id="plumb-med" name="plumbing" value="plumb-med" data-price="2">Medium: 20gal fresh, 5gal gray($TD)<br>
+									<input type="radio" id="plumb-high" name="plumbing" value="plumb-high" data-price="3">Highest: 20gal fresh & gray($TD)<br>
+								</fieldset>
+							</div>
+						</div>
+
+						<!-- SUB-CATEGORY: SHOWER -->
+						<div class="dropdown">
+							<button type="button" class="collapsible">Shower:</button>
+							<div class="content">
+								<fieldset>
+									<legend>Shower</legend>
+									<input type="checkbox" id="shower-in" value="shower-in" data-price="1">Shower Unit (Medium or High Plumbing Required) ($TD)<br>
+									<input type="checkbox" id="shower-out" value="shower-out" data-price="2">Outdoor Sun Shower ($TD)<br>
+								</fieldset>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<img class="category-image" src="Images/phtrans.png" alt="Default Van Image">
+
+			</div>
+
+			<!-- FOOTER -->
+			<div class="foot-top"></div>
+			<div class="footer">
+				<div class="price-text-num">
+					<h2>Estimated Price:</h2>
+					<h2 id="price-num">$0</h2>
+				</div>
+			</div>
+
+    </div>
+	</div>
+
+	<script>
+
+		/* Collapse
+		 * Taken from W3 schools
+		 * url: https://www.w3schools.com/howto/howto_js_collapsible.asp
+		 */
+		var coll = document.getElementsByClassName("collapsible");
+		var i;
+		for (i = 0; i < coll.length; i++) {
+			coll[i].addEventListener("click", function() {
+				this.classList.toggle("active");
+				var content = this.nextElementSibling;
+				if (content.style.maxHeight) {
+					content.style.maxHeight = null;
+				} else {
+					content.style.maxHeight = content.scrollHeight + "px";
+				}
+			});
+		}
+
+		/*
+		 * GET CHECKBOXES & RADIO BUTTONS
+		 */
+		// base model
+		const cargoRegChkbx = document.getElementById("cargo-reg");
+		const cargoExChkbx = document.getElementById("cargo-extend");
+		const passRegChkbx = document.getElementById("pass-reg");
+		const passExChkbx = document.getElementById("pass-extend");
+		// roof type
+		const lowRChkbx = document.getElementById("low-roof");
+		const highRChkbx = document.getElementById("high-roof");
+		const popRChkbx = document.getElementById("pop-top");
+		// walls & ceiling
+		const basicSheetChkbx = document.getElementById("basic-sheet");
+		const opt1Chkbx = document.getElementById("option1");
+		// flooring
+		const comboFChkbx = document.getElementById("comboF");
+		const vinylFloorChkbx = document.getElementById("vinyl-floor");
+		const coinDotChkbx = document.getElementById("coin-dot");
+		// windows
+		const driverMiddleBChkbx = document.getElementById("driver-middle-bunk");
+		const rearBarnChkbx = document.getElementById("rear-barn");
+		const sideBarnChkbx = document.getElementById("side-barn");
+		const passRearQChkbx = document.getElementById("pass-rear-quarter");
+		// accessories
+		const maxxAirFanChkbx = document.getElementById("maxx-air-fan");
+		const acUnitChkbx = document.getElementById("ac-unit");
+		const passSwivelChkbx = document.getElementById("pass-swivel");
+		const tableChkbx = document.getElementById("table");
+		// cabinets
+		const cabKitchChkbx = document.getElementById("cab-kitch");
+		const cabBackChkbx = document.getElementById("cab-back");
+		const cabBothChkbx = document.getElementById("cab-both");
+		// finsih
+		const finRawChkbx = document.getElementById("finish-raw");
+		const finPowChkbx = document.getElementById("finish-powder");
+		// bench bed
+		const benchVinChkbx = document.getElementById("bench-vinyl");
+		const benchFabChkbx = document.getElementById("bench-fabric");
+		// loft bed
+		const loftVinChkbx = document.getElementById("loft-vinyl");
+		const loftFabChkbx = document.getElementById("loft-fabric");
+		// electrical system
+		const elec2Chkbx = document.getElementById("elec-2KW");
+		const elec5Chkbx = document.getElementById("elec-5KW");
+		// plumbing system
+		const plumbSChkbx = document.getElementById("plumb-simple");
+		const plumbMChkbx = document.getElementById("plumb-med");
+		const plumbHChkbx = document.getElementById("plumb-high");
+		// shower
+		const showInChkbx = document.getElementById("shower-in");
+		const showOutChkbx = document.getElementById("shower-out");
+
+		// const wrapCheckDiv = document.getElementById("wrap-check");
+
+		/*
+		 * EVENT LISTENERS
+		 */
+		// base model
+		cargoRegChkbx.addEventListener("change", updateVanImageAndPrice);
+		cargoExChkbx.addEventListener("change", updateVanImageAndPrice);
+		passRegChkbx.addEventListener("change", updateVanImageAndPrice);
+		passExChkbx.addEventListener("change", updateVanImageAndPrice);
+		// roof type
+		lowRChkbx.addEventListener("change", updateVanImageAndPrice);
+		highRChkbx.addEventListener("change", updateVanImageAndPrice);
+		popRChkbx.addEventListener("change", updateVanImageAndPrice);
+		// walls & ceiling
+		basicSheetChkbx.addEventListener("change", updateVanImageAndPrice);
+		opt1Chkbx.addEventListener("change", updateVanImageAndPrice);
+		// flooring
+		comboFChkbx.addEventListener("change", updateVanImageAndPrice);
+		vinylFloorChkbx.addEventListener("change", updateVanImageAndPrice);
+		coinDotChkbx.addEventListener("change", updateVanImageAndPrice);
+		// windows
+		driverMiddleBChkbx.addEventListener("change", updateVanImageAndPrice);
+		rearBarnChkbx.addEventListener("change", updateVanImageAndPrice);
+		sideBarnChkbx.addEventListener("change", updateVanImageAndPrice);
+		passRearQChkbx.addEventListener("change", updateVanImageAndPrice);
+		// accessories
+		maxxAirFanChkbx.addEventListener("change", updateVanImageAndPrice);
+		acUnitChkbx.addEventListener("change", updateVanImageAndPrice);
+		passSwivelChkbx.addEventListener("change", updateVanImageAndPrice);
+		tableChkbx.addEventListener("change", updateVanImageAndPrice);
+		// cabinets
+		cabKitchChkbx.addEventListener("change", updateVanImageAndPrice);
+		cabBackChkbx.addEventListener("change", updateVanImageAndPrice);
+		cabBothChkbx.addEventListener("change", updateVanImageAndPrice);
+		// cabinets
+		finRawChkbx.addEventListener("change", updateVanImageAndPrice);
+		finPowChkbx.addEventListener("change", updateVanImageAndPrice);
+		// bench bed
+		benchVinChkbx.addEventListener("change", updateVanImageAndPrice);
+		benchFabChkbx.addEventListener("change", updateVanImageAndPrice);
+		// loft bed
+		loftVinChkbx.addEventListener("change", updateVanImageAndPrice);
+		loftFabChkbx.addEventListener("change", updateVanImageAndPrice);
+		// electric
+		elec2Chkbx.addEventListener("change", updateVanImageAndPrice);
+		elec5Chkbx.addEventListener("change", updateVanImageAndPrice);
+		// plumbing
+		plumbSChkbx.addEventListener("change", updateVanImageAndPrice);
+		plumbMChkbx.addEventListener("change", updateVanImageAndPrice);
+		plumbHChkbx.addEventListener("change", updateVanImageAndPrice);
+		// shower
+		showInChkbx.addEventListener("change", updateVanImageAndPrice);
+		showOutChkbx.addEventListener("change", updateVanImageAndPrice);
+
+		// bed radio button decheck
+		benchVinChkbx.addEventListener("click", decheck);
+		benchFabChkbx.addEventListener("click", decheck);
+		loftVinChkbx.addEventListener("click", decheck);
+		loftFabChkbx.addEventListener("click", decheck);
+
+		// wrapCheckDiv.addEventListener("resize", isWrapped);
+
+		// Function to decheck bed radio buttons
+		function decheck() {
+			let ticked = parseInt(this.getAttribute("data-ticked"));
+			if (ticked) {
+				this.checked = false;
+				this.setAttribute("data-ticked", "0");
+				updateVanImageAndPrice();
+			}
+			else {
+				let group = document.getElementsByName(this.name);
+				for (let radio of group) {
+					radio.setAttribute("data-ticked", "0");
+				}
+				this.setAttribute("data-ticked", "1");
+			}
+		}
+
+		// Function to update the van image and estimated price based on dropdown selections
+		function updateVanImageAndPrice() {
+			// base model
+			let cargoRegPrice = 0;
+			if(cargoRegChkbx.checked) {
+				cargoRegPrice = parseInt(cargoRegChkbx.getAttribute("data-price"));
+			}
+
+			let cargoExPrice = 0;
+			if(cargoExChkbx.checked) {
+				cargoExPrice = parseInt(cargoExChkbx.getAttribute("data-price"));
+			}
+
+			let passRegPrice = 0;
+			if(passRegChkbx.checked) {
+				passRegPrice = parseInt(passRegChkbx.getAttribute("data-price"));
+			}
+
+			let passExPrice = 0;
+			if(passExChkbx.checked) {
+				passExPrice = parseInt(passExChkbx.getAttribute("data-price"));
+			}
+
+			// roof type
+			let lowRPrice = 0;
+			if(lowRChkbx.checked) {
+				lowRPrice = parseInt(lowRChkbx.getAttribute("data-price"));
+			}
+
+			let highRPrice = 0;
+			if(highRChkbx.checked) {
+				highRPrice = parseInt(highRChkbx.getAttribute("data-price"));
+			}
+
+			let popRPrice = 0;
+			if(popRChkbx.checked) {
+				popRPrice = parseInt(popRChkbx.getAttribute("data-price"));
+			}
+
+			// walls & ceiling
+			let basicSheetPrice = 0;
+			if(basicSheetChkbx.checked) {
+				basicSheetPrice = parseInt(basicSheetChkbx.getAttribute("data-price"));
+			}
+
+			let opt1Price = 0;
+			if(opt1Chkbx.checked) {
+				opt1Price = parseInt(opt1Chkbx.getAttribute("data-price"));
+			}
+
+			// flooring
+			let comboFPrice = 0;
+			if(comboFChkbx.checked) {
+				comboFPrice = parseInt(comboFChkbx.getAttribute("data-price"));
+			}
+
+			let vinylFloorPrice = 0;
+			if(vinylFloorChkbx.checked) {
+				vinylFloorPrice = parseInt(vinylFloorChkbx.getAttribute("data-price"));
+			}
+
+			let coinDotPrice = 0;
+			if(coinDotChkbx.checked) {
+				coinDotPrice = parseInt(coinDotChkbx.getAttribute("data-price"));
+			}
+
+			// windows
+			let driverMiddleBPrice = 0;
+			if(driverMiddleBChkbx.checked) {
+				driverMiddleBPrice = parseInt(driverMiddleBChkbx.getAttribute("data-price"));
+			}
+
+			let rearBarnPrice = 0;
+			if(rearBarnChkbx.checked) {
+				rearBarnPrice = parseInt(rearBarnChkbx.getAttribute("data-price"));
+			}
+
+			let sideBarnPrice = 0;
+			if(sideBarnChkbx.checked) {
+				sideBarnPrice = parseInt(sideBarnChkbx.getAttribute("data-price"));
+			}
+
+			let passRearQPrice = 0;
+			if(passRearQChkbx.checked) {
+				passRearQPrice = parseInt(passRearQChkbx.getAttribute("data-price"));
+			}
+
+			// accessories
+			let maxxAirFanPrice = 0;
+			if(maxxAirFanChkbx.checked) {
+				maxxAirFanPrice = parseInt(maxxAirFanChkbx.getAttribute("data-price"));
+			}
+
+			let acUnitPrice = 0;
+			if(acUnitChkbx.checked) {
+				acUnitPrice = parseInt(acUnitChkbx.getAttribute("data-price"));
+			}
+
+			let passSwivelPrice = 0;
+			if(passSwivelChkbx.checked) {
+				passSwivelPrice = parseInt(passSwivelChkbx.getAttribute("data-price"));
+			}
+
+			let tablePrice = 0;
+			if(tableChkbx.checked) {
+				tablePrice = parseInt(tableChkbx.getAttribute("data-price"));
+			}
+
+			// cabinets
+			let cabKitchPrice = 0;
+			if(cabKitchChkbx.checked) {
+				cabKitchPrice = parseInt(cabKitchChkbx.getAttribute("data-price"));
+			}
+
+			let cabBackPrice = 0;
+			if(cabBackChkbx.checked) {
+				cabBackPrice = parseInt(cabBackChkbx.getAttribute("data-price"));
+			}
+
+			let cabBothPrice = 0;
+			if(cabBothChkbx.checked) {
+				cabBothPrice = parseInt(cabBothChkbx.getAttribute("data-price"));
+			}
+
+			// finish
+			let finRawPrice = 0;
+			if(finRawChkbx.checked) {
+				finRawPrice = parseInt(finRawChkbx.getAttribute("data-price"));
+			}
+
+			let finPowPrice = 0;
+			if(finPowChkbx.checked) {
+				finPowPrice = parseInt(finPowChkbx.getAttribute("data-price"));
+			}
+
+			// bench bed
+			let benchVinPrice = 0;
+			if(benchVinChkbx.checked) {
+				benchVinPrice = parseInt(benchVinChkbx.getAttribute("data-price"));
+			}
+
+			let benchFabPrice = 0;
+			if(benchFabChkbx.checked) {
+				benchFabPrice = parseInt(benchFabChkbx.getAttribute("data-price"));
+			}
+
+			// loft bed
+			let loftVinPrice = 0;
+			if(loftVinChkbx.checked) {
+				loftVinPrice = parseInt(loftVinChkbx.getAttribute("data-price"));
+			}
+
+			let loftFabPrice = 0;
+			if(loftFabChkbx.checked) {
+				loftFabPrice = parseInt(loftFabChkbx.getAttribute("data-price"));
+			}
+
+			// electric
+			let elec2Price = 0;
+			if(elec2Chkbx.checked) {
+				elec2Price = parseInt(elec2Chkbx.getAttribute("data-price"));
+			}
+
+			let elec5Price = 0;
+			if(elec5Chkbx.checked) {
+				elec5Price = parseInt(elec5Chkbx.getAttribute("data-price"));
+			}
+
+			// plumbing
+			let plumbSPrice = 0;
+			if(plumbSChkbx.checked) {
+				plumbSPrice = parseInt(plumbSChkbx.getAttribute("data-price"));
+			}
+
+			let plumbMPrice = 0;
+			if(plumbMChkbx.checked) {
+				plumbMPrice = parseInt(plumbMChkbx.getAttribute("data-price"));
+			}
+
+			let plumbHPrice = 0;
+			if(plumbHChkbx.checked) {
+				plumbHPrice = parseInt(plumbHChkbx.getAttribute("data-price"));
+			}
+
+			// shower
+			let showInPrice = 0;
+			if(showInChkbx.checked) {
+				showInPrice = parseInt(showInChkbx.getAttribute("data-price"));
+			}
+
+			let showOutPrice = 0;
+			if(showOutChkbx.checked) {
+				showOutPrice = parseInt(showOutChkbx.getAttribute("data-price"));
+			}
+
+			// Calculate the total price
+			const totalPrice =
+			cargoRegPrice + cargoExPrice + passRegPrice + passExPrice +
+			lowRPrice + highRPrice + popRPrice +
+			basicSheetPrice + opt1Price +
+			comboFPrice + vinylFloorPrice + coinDotPrice +
+			driverMiddleBPrice + rearBarnPrice + sideBarnPrice + passRearQPrice +
+			maxxAirFanPrice + acUnitPrice + passSwivelPrice + tablePrice +
+			cabKitchPrice + cabBackPrice + cabBothPrice +
+			finRawPrice + finPowPrice +
+			benchVinPrice + benchFabPrice +
+			loftVinPrice + loftFabPrice +
+			elec2Price + elec5Price +
+			plumbSPrice + plumbMPrice + plumbHPrice +
+			showInPrice + showOutPrice;
+
+			// // Generate the image URL based on selected values
+			// const imageUrl = generateImageUrl(baseModel, interiorColor, roofType);
+
+			// // Update the van image
+			// const vanImage = document.getElementById("van-image");
+			// vanImage.src = imageUrl;
+
+			// Update the estimated price
+			const estimatedPriceElement = document.getElementById("price-num");
+			estimatedPriceElement.textContent = "$" + totalPrice.toLocaleString();
+		}
+
+		// // Function to generate the image URL based on selected values
+		// function generateImageUrl(baseModel, interiorColor, roofType) {
+		//     // Replace this with your own logic to generate the image URL based on the selected values
+		//     // Example: const imageUrl = "https://example.com/vans/" + baseModel + "/" + interiorColor + "/" + roofType + ".jpg";
+		//     const imageUrl = "default.jpg"; // Default image URL
+		//     return imageUrl;
+		// }
+
+		// /* Function to determine if items are wrapping
+		//    Taken from Citizen on stackoverflow
+		//    answer url: https://stackoverflow.com/a/54585402
+		//    original question: https://stackoverflow.com/questions/43420603/can-flexbox-detect-when-a-flex-item-wraps
+		//  */
+		// function isWrapped(id) {
+		//     let el = document.getElementById(id)
+		//     return (el.offsetTop > 0)
+		// }
+
+		// Trigger the initial update on page load
+		updateVanImageAndPrice();
+	</script>
+</body>
+</html>
