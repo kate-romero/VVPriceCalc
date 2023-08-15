@@ -9,7 +9,6 @@
 			background: url(Images/bg.png) no-repeat center fixed; 
 			background-size: cover;
 			font-family: sans-serif;
-			/* font-size: 1.2rem; */
 		}
 
 		/* getting rid of maragins */
@@ -31,7 +30,6 @@
 			/* margin & padding */
 			margin: 64px;
 			min-width: 55%;
-			/* max-width: 100%; */
 			padding: 32px;
 
 			/* alignment */
@@ -43,7 +41,6 @@
 
 			/* aesthetics */
 			background-color: #FAF9F6; /* offwhite */
-			/* background-color: #deddda; */
 			box-shadow: 0px 0px 15px 3px black;
 			border-radius: 50px;
 			border-bottom: 50px solid #242B44;
@@ -53,23 +50,6 @@
 			.sheet {
 				/* margin & padding */
 				margin: 7.5%;
-				/* width: 10%; */
-				/* max-width: 100%; */
-				/* padding: 32px; */
-
-				/* alignment */
-				/* display:flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				align-items: stretch; */
-
-				/* aesthetics */
-				/* background-color: aquamarine; offwhite */
-				/* background-color: #deddda; */
-				/* box-shadow: 0px 0px 15px 3px black;
-				border-radius: 3px;
-				border-bottom: 3px solid #242B44; */
 			}
 		}
 
@@ -80,45 +60,25 @@
 			align-items: center;
 
 			/* sizing, margin, padding */
-			/* height: 160px; */
 			height: 160px;
 			margin: -32px -32px 0px -32px;
-			/* padding-left: 16px; */
-			/* padding-top: 32px; */
 			padding: 32px;
 
 			/* aesthetics */
 			border-radius: 50px 50px 0px 0px;
 			background-color: #FAF9F6;
 			color: black;
-			/* border: 2px solid yellow; */
 		}
 
 		@media screen and (max-width: 525px) { /* 525 smooth on my laptop */
 			.header {
 			/* alignment */
-			/* display: flex; */
 			justify-content: center;
-			/* align-items: center; */
-
-			/* sizing, margin, padding */
-			/* height: 160px; */
-			/* margin: -32px -32px 0px -32px; */
-			/* padding-left: 16px; */
-			/* padding-top: 32px; */
-			/* padding: 32px; */
-
-			/* aesthetics */
-			/* border-radius: 3px 3px 0px 0px; */
-			/* background-color: yellow; */
-			/* color: black; */
-			/* border: 2px solid yellow; */
 			}
 		}
 
 		.center-header {
 			display: flex;
-			/* border: 1px solid black; */
 		}
 		
 		/* .header-box {
@@ -129,18 +89,12 @@
 
 		.header-image {
 			object-fit: contain;
-			/* max-width: 33%; */
-			/* max-height: 160px; */
 			height: 128px;
 			margin-right: 13px;
-			/* border: 2px dashed purple; */
 		}
 
 		.header-title {
-			/* max-width: calc(50% - 21px);	* 13px w/out borders */
-			/* border: 2px dashed red; */
 			font-size: 26px;
-			/* line-height: noraml; */
 		}
 
 		.category-title {
@@ -148,8 +102,6 @@
 			justify-content: center;
 			text-align: center;
 			margin-bottom: 32px;
-			/* font-family: blippo; */
-			/* border: 1px solid red; */
 		}
 
 		.category-title p {
@@ -173,9 +125,7 @@
 			flex-wrap: wrap-reverse;
 			margin-bottom: 32px;
 			/* align-items: center; */ /* TD: yay or nay? */
-			/* border: 1px solid green; */
 			justify-content: center;	/* might not need after finished with center on wrap */
-			/* align-content: center; */
 		}
 
 		@media screen and (max-width: 850px) {	/* half my laptop is 851 */
@@ -194,20 +144,16 @@
 		.category-image {
 			flex:1;
 			object-fit: contain;
-			/* border: 1px solid blue; */
 		}
 
 		.no-image {
 			display: flex;
 			flex:2;
-			/*border: 1px dotted black;
-			justify-content: center;*/
 		}
 
 		
 		.center-on-wrap{
 			width:fit-content;
-			/* border: 1px dashed pink; */
 		}
 
 		@media screen and (max-width: 850px) {
@@ -230,7 +176,6 @@
 		}
 
 		.content {
-			/* border: 1px solid red; */
 			max-height: 0;
 			overflow: hidden;
 			transition: max-height 0.2s ease-out;
@@ -256,10 +201,8 @@
 		 */
 
 		.dropdown {
-			/*max-width: 50%;*/
 			width: fit-content;
 			margin: 8px;
-			/* border: 1px solid orange; */
 		}
 
 		fieldset {
@@ -277,7 +220,6 @@
 			/* alignment */
 			display: flex;
 			justify-content: center;
-			/* text-align: center; */
 			align-items: center;
 
 			/* sticky display */
@@ -286,14 +228,9 @@
 			margin: 0px -32px -33px -32px;
 
 			/* aesthetics */
-			/* background-color: #38383b; */
 			background-color: #242b44;
-			/* background-color: #a8a5a0; */
 			color: #FAF9F6;
-			/* color: #38383b; */
-			/* color: black; */
 			height: 48px;
-			/* border: 2px dashed lime; */
 		}
 
 		.price-text-num {
@@ -302,9 +239,6 @@
 			justify-content: center;
 			text-align: center;
 			size: fit-content;
-			/* padding:0px; */
-
-			/* border: 2px solid red; */
 		}
 
 		.price-text-num h2 {
